@@ -1,0 +1,16 @@
+{
+	"name": "Existing Dockerfile",
+	"build": {
+		"context": "..",
+		"dockerfile": "./dev.alpine.Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"unifiedjs.vscode-mdx",
+				"esbenp.prettier-vscode",
+				"dbaeumer.vscode-eslint"
+			]
+		}
+	}
+}
