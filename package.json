@@ -14,6 +14,18 @@
     "@astrojs/mdx": "^0.14.0",
     "@astrojs/preact": "^1.2.0",
     "astro": "^1.8.0",
-    "preact": "^10.6.5"
+    "preact": "^10.6.5",
+    "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.30.0",
+    "prettier": "^2.8.1"
+  },
+  "prettier": {
+    "endOfLine": "lf",
+    "printWidth": 80,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "useTabs": false
   }
 }
