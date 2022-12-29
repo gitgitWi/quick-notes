@@ -1,0 +1,17 @@
+---
+import { default as DefaultLayout } from './default-layout.astro';
+const { frontmatter } = Astro.props;
+---
+
+<html>
+  <head>
+    <title>{frontmatter.title} | QuickNotes</title>
+  </head>
+  <body>
+    <DefaultLayout>
+      <!-- TODO: post layout -->
+      <h1>{frontmatter.title}</h1>
+      <slot />
+    </DefaultLayout>
+  </body>
+</html>
