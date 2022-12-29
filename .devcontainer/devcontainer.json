@@ -9,7 +9,18 @@
 			"extensions": [
 				"unifiedjs.vscode-mdx",
 				"esbenp.prettier-vscode",
-				"dbaeumer.vscode-eslint"
+				"dbaeumer.vscode-eslint",
+				"bradlc.vscode-tailwindcss",
+				"syler.sass-indented",
+				"christian-kohler.path-intellisense",
+				"christian-kohler.npm-intellisense",
+				"wix.vscode-import-cost",
+				"eamodio.gitlens-insiders",
+				"mhutchie.git-graph",
+				"evondev.indent-rainbow-palettes",
+				"kisstkondoros.vscode-codemetrics",
+				"streetsidesoftware.code-spell-checker",
+				"astro-build.astro-vscode"
 			]
 		}
 	}
