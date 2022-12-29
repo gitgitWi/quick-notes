@@ -18,6 +18,12 @@ jobs:
         with:
           node-version: 18
 
+      - name: Check Build Environments
+        run: npx envinfo
+
+      - name: Install PNPM
+        run: npm i -g pnpm
+
       - name: Install Packages
         run: pnpm install
 
