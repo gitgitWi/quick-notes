@@ -1,13 +1,18 @@
 /** @jsxImportSource preact */
 
-type CardTitleProps = {
+import type { PropsWithClassNames } from '@/types';
+
+type CardTitleProps = PropsWithClassNames<{
   title: string;
-  classNames?: string[];
-};
+}>;
 
 export function CardTitle({ title, classNames = [] }: CardTitleProps) {
   return (
-    <p class={['text-2xl', 'font-bold'].concat(classNames).join(' ')}>
+    <p
+      class={['text-2xl', 'font-bold', 'hover:underline']
+        .concat(classNames)
+        .join(' ')}
+    >
       {title}
     </p>
   );
