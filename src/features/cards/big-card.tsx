@@ -1,19 +1,24 @@
 /** @jsxImportSource preact */
 
-type BigCardProps = {
-  title: string;
-  url: string;
-  updatedAt: string;
-};
+import type { Frontmatter } from '@/types';
+
+import { CardTitle } from './card-title';
+
+type BigCardProps = {} & Frontmatter;
 
 /**
  * biggest card of post list
  */
-export function BigCard({ title, url, updatedAt }: BigCardProps) {
+export function BigCard({
+  title,
+  url,
+  updatedAt,
+  thumbnailUrl = '',
+}: BigCardProps) {
   return (
     <article class="p-4 m-2 rounded-xl flex bg-indigo-200/70">
       <a href={url} class="w-full text-indigo-900">
-        <p class="text-lg">{title}</p>
+        <CardTitle title={title} />
         <p class="text-sm text-right italic text-indigo-900/70">
           updated: {updatedAt}
         </p>
