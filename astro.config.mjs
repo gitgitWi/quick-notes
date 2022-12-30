@@ -5,5 +5,6 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   integrations: [mdx(), tailwind(), preact()],
-  site: 'https://gitgitWi.github.io/quick-notes',
+  site: 'https://gitgitWi.github.io',
+  base: '/quick-notes',
 });
