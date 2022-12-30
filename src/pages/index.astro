@@ -1,6 +1,9 @@
 ---
 import { DefaultLayout } from '@features/ui/layouts';
 import { Title } from '@features/ui/title';
+
+const pages = await Astro.glob('../pages/**/*.{md,mdx}');
+const latestPage = pages[0];
 ---
 
 <html>
@@ -11,6 +14,18 @@ import { Title } from '@features/ui/title';
   <body>
     <DefaultLayout>
       <Title>Quick Notes</Title>
+      <hr />
+      <section>
+        <!-- latest article -->
+        <article class="p-4 m-2 rounded-xl flex bg-indigo-200/70">
+          <a href={latestPage.url} class="w-full text-indigo-900">
+            <p class="text-lg">{latestPage.frontmatter.title}</p>
+            <p class="text-sm text-right italic text-indigo-900/70">
+              updated: {latestPage.frontmatter.updatedAt}
+            </p>
+          </a>
+        </article>
+      </section>
     </DefaultLayout>
   </body>
 </html>
