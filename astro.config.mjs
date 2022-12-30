@@ -1,8 +1,10 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import preact from '@astrojs/preact';
+import tailwind from '@astrojs/tailwind';
 
-// https://astro.build/config
 export default defineConfig({
-	integrations: [mdx(), preact()],
+  integrations: [mdx(), tailwind(), preact()],
+  site: 'https://gitgitWi.github.io',
+  base: '/quick-notes',
 });
