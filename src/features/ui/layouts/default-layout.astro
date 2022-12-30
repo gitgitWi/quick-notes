@@ -1,12 +1,9 @@
-<html>
-  <head>
-    <title>QuickNotes</title>
-  </head>
-  <body>
-    <main
-      class="w-full md:max-w-screen-lg flex flex-col justify-center border border-indigo-50/70"
-    >
-      <slot />
-    </main>
-  </body>
-</html>
+---
+import '@/styles/global.scss';
+---
+
+<main
+  class="w-full md:max-w-screen-lg h-full flex flex-col justify-start border border-indigo-50/70"
+>
+  <slot />
+</main>
