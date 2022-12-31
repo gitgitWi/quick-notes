@@ -1,3 +1,12 @@
-<h1 class="w-full h-max p-4 text-center text-7xl font-extrabold text-indigo-50">
+---
+import styles from './styles.module.scss';
+---
+
+<h1
+  class={[
+    'w-full h-max p-4 text-center text-7xl font-extrabold text-indigo-50 select-none',
+    styles.textShadow,
+  ].join(' ')}
+>
   <slot />
 </h1>
