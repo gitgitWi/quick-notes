@@ -3,6 +3,7 @@
 import type { Frontmatter } from '@/types';
 
 import { CardTitle } from './card-title';
+import { CardDescription } from './card-description';
 import { CardUpdatedAt } from './card-updated-at';
 
 type BigCardProps = {} & Frontmatter;
@@ -14,6 +15,7 @@ export function BigCard({
   title,
   url,
   updatedAt,
+  description = '',
   thumbnailUrl = '',
 }: BigCardProps) {
   return (
@@ -22,7 +24,7 @@ export function BigCard({
       <a href={url} class="w-full text-indigo-900">
         {thumbnailUrl && <img src={thumbnailUrl}></img>}
         <CardTitle title={title} />
-        {/* TODO: description */}
+        {description && <CardDescription descriptionText={description} />}
         <CardUpdatedAt updatedAt={updatedAt} />
       </a>
     </article>
