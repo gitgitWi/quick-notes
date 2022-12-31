@@ -1,6 +1,15 @@
 ---
+import type { AstroPostPage } from '@/types';
 import { DefaultLayout } from '@features/ui/layouts';
 import { Title } from '@features/ui/title';
+import { BigCard, NormalCard } from '@features/cards';
+
+const pages = await Astro.glob<AstroPostPage>('./**/*.{md,mdx}');
+const [latestPage, ...restPages] = pages.sort(
+  (a, b) =>
+    new Date(b.frontmatter.updatedAt).getTime() -
+    new Date(a.frontmatter.updatedAt).getTime()
+);
 ---
 
 <html>
@@ -11,6 +20,27 @@ import { Title } from '@features/ui/title';
   <body>
     <DefaultLayout>
       <Title>Quick Notes</Title>
+      <hr />
+      <section>
+        <BigCard
+          title={latestPage.frontmatter.title}
+          description={latestPage.frontmatter.description ?? ''}
+          url={latestPage.url}
+          updatedAt={latestPage.frontmatter.updatedAt}
+          tags={latestPage.frontmatter.tags}
+        />
+
+        {
+          restPages.map((page) => (
+            <NormalCard
+              title={page.frontmatter.title}
+              url={page.url}
+              updatedAt={page.frontmatter.updatedAt}
+              tags={page.frontmatter.tags}
+            />
+          ))
+        }
+      </section>
     </DefaultLayout>
   </body>
 </html>

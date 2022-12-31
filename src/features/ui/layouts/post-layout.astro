@@ -12,18 +12,20 @@ const { frontmatter } = Astro.props;
   <body>
     <DefaultLayout>
       <Title>{frontmatter.title ?? 'NO TITLE'}</Title>
+
       <!-- TODO: post layout -->
       <article class="h-full overflow-auto">
         <slot />
+
         <!-- TODO: seperate component -->
-        <code class="text-sm text-indigo-200 italic font-light cursor-default"
-          >{
+        <div class="text-sm text-indigo-200 italic font-light cursor-default">
+          {
             (frontmatter.tags ?? '')
               .split(', ')
               .map((tag: string) => `#${tag}`)
               .join(' ')
-          }</code
-        >
+          }
+        </div>
       </article>
     </DefaultLayout>
   </body>
