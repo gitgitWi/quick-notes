@@ -8,11 +8,7 @@ type CardTitleProps = PropsWithClassNames<{
 
 export function CardTitle({ title, classNames = [] }: CardTitleProps) {
   return (
-    <p
-      class={['text-2xl', 'font-bold', 'hover:underline']
-        .concat(classNames)
-        .join(' ')}
-    >
+    <p class={['mb-2', 'text-2xl', 'font-bold'].concat(classNames).join(' ')}>
       {title}
     </p>
   );
