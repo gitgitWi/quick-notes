@@ -12,11 +12,7 @@ export function CardUpdatedAt({
   classNames = [],
 }: CardUpdatedAtProps) {
   return (
-    <p
-      class={['text-sm text-right italic text-indigo-900/70']
-        .concat(classNames)
-        .join(' ')}
-    >
+    <p class={['text-right italic'].concat(classNames).join(' ')}>
       {prefix || 'updated: '}
       {updatedAt}
     </p>
