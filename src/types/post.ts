@@ -1,3 +1,8 @@
+export type AstroPostPage = {
+  frontmatter: Frontmatter;
+  url: string;
+};
+
 export type Frontmatter = Frontmatter$Core & Frontmatter$Post;
 
 export type Frontmatter$Core = {
