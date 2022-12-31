@@ -1,8 +1,17 @@
 {
-  "name": "@example/with-mdx",
+  "name": "quick-nots",
+  "author": {
+    "name": "위정훈 gitgitWi",
+    "email": "gitgitWi@gmail.com"
+  },
+  "repository": {
+    "url": "https://github.com/gitgitWi/quick-notes"
+  },
+  "homepage": "https://gitgitwi.github.io/quick-notes",
   "type": "module",
   "version": "0.0.1",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
