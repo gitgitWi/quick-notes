@@ -10,7 +10,7 @@ export function CardDescription({
   classNames = [],
 }: CardDescriptionProps) {
   return (
-    <p class={['text-base text-indigo-900/90'].concat(classNames).join(' ')}>
+    <p class={['text-base text-indigo-900/80'].concat(classNames).join(' ')}>
       {descriptionText}
     </p>
   );
