@@ -14,4 +14,5 @@ export type Frontmatter$Core = {
 export type Frontmatter$Post = {
   description?: string;
   thumbnailUrl?: string;
+  tags?: string;
 };
