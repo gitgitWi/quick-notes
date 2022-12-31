@@ -2,10 +2,11 @@
 import type { AstroPostPage } from '@/types';
 import { DefaultLayout } from '@features/ui/layouts';
 import { Title } from '@features/ui/title';
-import { BigCard } from '@features/cards';
+import { BigCard, NormalCard } from '@features/cards';
 
-const pages = await Astro.glob<AstroPostPage>('./**/*.{md,mdx}');
-const latestPage = pages[0];
+const [latestPage, ...restPages] = await Astro.glob<AstroPostPage>(
+  './**/*.{md,mdx}'
+);
 ---
 
 <html>
@@ -25,6 +26,17 @@ const latestPage = pages[0];
           updatedAt={latestPage.frontmatter.updatedAt}
           tags={latestPage.frontmatter.tags}
         />
+
+        {
+          restPages.map((page) => (
+            <NormalCard
+              title={page.frontmatter.title}
+              url={page.url}
+              updatedAt={page.frontmatter.updatedAt}
+              tags={page.frontmatter.tags}
+            />
+          ))
+        }
       </section>
     </DefaultLayout>
   </body>
