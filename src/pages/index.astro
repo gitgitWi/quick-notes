@@ -4,8 +4,11 @@ import { DefaultLayout } from '@features/ui/layouts';
 import { Title } from '@features/ui/title';
 import { BigCard, NormalCard } from '@features/cards';
 
-const [latestPage, ...restPages] = await Astro.glob<AstroPostPage>(
-  './**/*.{md,mdx}'
+const pages = await Astro.glob<AstroPostPage>('./**/*.{md,mdx}');
+const [latestPage, ...restPages] = pages.sort(
+  (a, b) =>
+    new Date(b.frontmatter.updatedAt).getTime() -
+    new Date(a.frontmatter.updatedAt).getTime()
 );
 ---
 
