@@ -14,7 +14,9 @@ const { frontmatter } = Astro.props;
       <Title>{frontmatter.title ?? 'NO TITLE'}</Title>
 
       <!-- TODO: post layout -->
-      <article class="h-full overflow-auto text-indigo-50/90 select-none">
+      <article
+        class="h-full overflow-auto text-indigo-50/90 select-none text-lg"
+      >
         <slot />
 
         <!-- TODO: seperate component -->
