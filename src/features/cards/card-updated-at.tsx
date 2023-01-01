@@ -14,7 +14,9 @@ export function CardUpdatedAt({
   return (
     <p class={['text-right italic'].concat(classNames).join(' ')}>
       {prefix || 'updated: '}
-      {updatedAt}
+      {new Date(updatedAt).toLocaleDateString('ko-KR', {
+        timeZone: 'Asia/Seoul',
+      })}
     </p>
   );
 }

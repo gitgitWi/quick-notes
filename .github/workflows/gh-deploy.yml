@@ -3,13 +3,13 @@ name: Deploy to github.io
 on:
   push:
     branches:
-      - 'main'
+      - "docs/*"
   pull_request:
     branches:
-      - 'main'
+      - "main"
     paths-ignore:
-      - 'README.md'
-      - '.gitignore'
+      - "README.md"
+      - ".gitignore"
 
 jobs:
   build:
