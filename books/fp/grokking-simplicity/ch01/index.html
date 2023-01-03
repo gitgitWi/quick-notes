@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>함수형 코딩에 오신 것을 환영합니다 | QuickNotes</title>
+  <link rel="stylesheet" href="/quick-notes/assets/ch01.8545b12a.css" />
+<link rel="stylesheet" href="/quick-notes/assets/index.7535fdec.css" /></head>
+  <body>
+    <main class="w-full md:max-w-screen-lg h-full flex flex-col justify-start border border-indigo-50/70">
+  <h1 class="w-full h-max p-4 text-center text-7xl font-extrabold text-indigo-50 select-none _textShadow_1mk9d_1">
+  함수형 코딩에 오신 것을 환영합니다
+</h1><article class="m-4 h-full overflow-auto text-indigo-50/90 select-none text-lg">
+        <h2 class="my-4 text-5xl text-indigo-100 font-extrabold whitespace-normal break-words cursor-pointer hover:underline">함수형 프로그래밍은 무엇?</h2>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">fp는 범용 프로그래밍 패러다임이지만, 좀 더 잘 어울리는 곳이 있다</li>
+</ul>
+<h3 class="max-w-[90%] my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">wikipedia의 정의</h3>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc"><strong>수학 함수</strong>를 사용하고 <strong>부수 효과side effect</strong>를 피하는 것이 특징인 프로그래밍 패러다임</li>
+<li class="ml-2 list-inside list-disc"><strong>부수 효과</strong> 없이 <strong>순수 함수</strong>만 사용하는 프로그래밍 스타일</li>
+</ul>
+<h3 class="max-w-[90%] my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">실용적 측면에서 위 정의의 문제점</h3>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">side effect는 필요하다
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">소프트웨어를 실행하는 이유; ex. 이메일 전송, DOM 조작</li>
+</ul>
+</li>
+<li class="ml-2 list-inside list-disc">FP는 side effect를 잘 다룰 수 있다</li>
+<li class="ml-2 list-inside list-disc">FP는 실용적이다</li>
+</ul>
+<h3 class="max-w-[90%] my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">액션, 계산, 데이터 구분하기</h3>
+<p><strong>액션</strong></p>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">실행 시점, 횟수에 의존</li>
+<li class="ml-2 list-inside list-disc"><em>시간이 지남에 따라 안전하게 상태를 바꿀 수 있는 방법</em></li>
+<li class="ml-2 list-inside list-disc"><em>순서를 보장하는 방법</em></li>
+<li class="ml-2 list-inside list-disc"><em>액션이 정확히 한 번만 실행되게 보장하는 방법</em></li>
+</ul>
+<p><strong>계산</strong></p>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">입력 값을 계산해 항상 동일한 출력</li>
+<li class="ml-2 list-inside list-disc"><em>정확성을 위한 정적 분석</em></li>
+<li class="ml-2 list-inside list-disc"><em>소프트웨어에서 쓸 수 있는 수학적 지식</em></li>
+<li class="ml-2 list-inside list-disc"><em>테스트 전략</em></li>
+</ul>
+<p><strong>데이터</strong></p>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">이벤트에 대한 사실 기록한 값, 실행하지 않는 정적인 것</li>
+<li class="ml-2 list-inside list-disc"><em>효율적으로 접근하기 위해 데이터를 구성하는 방법</em></li>
+<li class="ml-2 list-inside list-disc"><em>데이터를 보관하기 위한 기술</em></li>
+<li class="ml-2 list-inside list-disc"><em>데이터를 이용해 중요한 것을 발견하는 원칙</em></li>
+</ul>
+<h3 class="max-w-[90%] my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">액션, 계산, 데이터를 구분했을 때의 장점</h3>
+<p>분산 시스템에 잘 어울림</p>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">복잡한 소프트웨어, 처리해야 할 메시지가 섞이고, 중복, 유실되기도</li>
+<li class="ml-2 list-inside list-disc">실행 시점/횟수에 의존하는 코드를 최소화하면, 코드를 더 이해하기 쉽게 하고, 심각한 버그를 만들 수 있음</li>
+<li class="ml-2 list-inside list-disc">액션을 코드 전체에 영향을 주지 않도록 최대한 격리시키면, 액션도 다루기 쉬워짐</li>
+</ul>
+<br/>
+<h2 class="my-4 text-5xl text-indigo-100 font-extrabold whitespace-normal break-words cursor-pointer hover:underline">함수형 사고란 무엇?</h2>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">함수형 프로그래머가 소프트웨어 문제를 해결하기 위해 사용하는 기술과 생각
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">액션, 계산, 데이터를 구분</li>
+<li class="ml-2 list-inside list-disc">일급 추상 <em>first-class abstraction</em></li>
+</ul>
+</li>
+</ul>
+<h3 class="max-w-[90%] my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">이 책에서 JavaScript를 사용하는 이유</h3>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">많은 사람들이 쓰는 언어. 웹 개발자가 아니더라도 조금은 알고 있음</li>
+<li class="ml-2 list-inside list-disc">FP에 필요한 모든 것을 갖고 있고,</li>
+<li class="ml-2 list-inside list-disc">완벽한 FP 언어는 아니지만, 부족한 점 덕분에 오히려 어떤 것이 필요한 지 알 수 있는 계기가 됨
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">대부분 언어가 FP 기능을 완전히 갖고 있지 않기 때문에, 어떤 언어를 갖고도 FP를 할 수 있게 됨</li>
+</ul>
+</li>
+</ul>
+
+        <!-- TODO: seperate component -->
+        <div class="text-sm text-indigo-200 italic font-light cursor-default">
+          #develop #fp
+        </div>
+      </article>
+</main>
+  </body>
+</html>
