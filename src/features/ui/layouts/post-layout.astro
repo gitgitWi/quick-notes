@@ -20,7 +20,7 @@ const { frontmatter } = Astro.props;
         <slot />
 
         <!-- TODO: seperate component -->
-        <div class="text-sm text-indigo-200 italic font-light cursor-default">
+        <div class="pt-4 text-sm text-indigo-200/90 italic font-light cursor-default text-right">
           {
             (frontmatter.tags ?? '')
               .split(', ')
