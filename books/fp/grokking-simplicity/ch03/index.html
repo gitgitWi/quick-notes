@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>액션, 계산, 데이터의 차이를 알기 | QuickNotes</title>
+  <link rel="stylesheet" href="/quick-notes/assets/ch01.8545b12a.css" />
+<link rel="stylesheet" href="/quick-notes/assets/index.7535fdec.css" /></head>
+  <body>
+    <main class="w-full md:max-w-screen-lg h-full flex flex-col justify-start border border-indigo-50/70">
+  <h1 class="w-full h-max p-4 text-center text-7xl font-extrabold text-indigo-50 select-none _textShadow_1mk9d_1">
+  액션, 계산, 데이터의 차이를 알기
+</h1><article class="m-4 h-full overflow-auto text-indigo-50/90 select-none text-lg">
+        <h2 class="my-4 text-5xl text-indigo-100 font-extrabold whitespace-normal break-words cursor-pointer hover:underline">액션, 계산, 데이터</h2>
+<h3 class="max-w-[90%] my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">구분하기</h3>
+<p>모든 개발 과정에서 적용 가능</p>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">문제에 대해 생각할 때
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">코드를 작성할 때 특별히 주의해야할 부분(액션), 데이터로 처리해야 할 부분, 결정을 내려야 하는 부분(계산) 명확히 구분</li>
+</ul>
+</li>
+<li class="ml-2 list-inside list-disc">코딩할 때
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">최대한 액션에서 계산 빼내기</li>
+<li class="ml-2 list-inside list-disc">계산에서 데이터 분리할 수 있는지 생각하기</li>
+<li class="ml-2 list-inside list-disc">액션이 계산이 될 수 있는지, 계산은 데이터가 될 수 있는지 고민하기</li>
+</ul>
+</li>
+<li class="ml-2 list-inside list-disc">코드 읽을 때
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">액션은 시간에 의존하기 때문에 더욱 조심해야 함</li>
+<li class="ml-2 list-inside list-disc">숨어있는 액션까지도 찾아야 함</li>
+</ul>
+</li>
+</ul>
+<h3 class="max-w-[90%] my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">일상에서 액션/계산/데이터 구분; 장보기</h3>
+<h4 class="max-w-[90%] my-2 ml-2 text-xl text-indigo-200/90 font-bold underline whitespace-normal break-words">타임라인</h4>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">냉장고 확인 <em>(액션)</em>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">확인하는 시점이 중요하므로 액션</li>
+<li class="ml-2 list-inside list-disc">냉장고에 있는 제품은 <em>데이터</em>; 현재 재고</li>
+</ul>
+</li>
+<li class="ml-2 list-inside list-disc">운전해서 상점으로 가기 <em>(액션)</em></li>
+<li class="ml-2 list-inside list-disc">필요한 것 구입하기 <em>(액션)</em>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">현재 재고 <em>(데이터)</em></li>
+<li class="ml-2 list-inside list-disc">필요한 재고 <em>(데이터)</em></li>
+<li class="ml-2 list-inside list-disc">재고 빼기 <em>(계산)</em></li>
+<li class="ml-2 list-inside list-disc">장보기 목록 <em>(데이터)</em></li>
+<li class="ml-2 list-inside list-disc">목록에 있는 것 구입 <em>(액션)</em></li>
+</ul>
+</li>
+<li class="ml-2 list-inside list-disc">운전해서 집으로 오기 <em>(액션)</em></li>
+<li class="ml-2 list-inside list-disc">음식을 냉장고에 보관하기 <em>(액션)</em></li>
+</ul>
+<p>타임라인을 크게 보면 전부 액션이지만</p>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">액션 안에 계산과 데이터로 나눌 수 있고, 각각의 액션도 세부 액션으로 나눌 수 있음</li>
+<li class="ml-2 list-inside list-disc">계산도 더 작은 계산과 데이터로 나누고 연결할 수 있음</li>
+<li class="ml-2 list-inside list-disc">데이터는 데이터만 조합할 수 있음
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">데이터 찾는 일을 먼저 해야, 동작에 대해 많은 것을 알 수 있음</li>
+</ul>
+</li>
+<li class="ml-2 list-inside list-disc">계산 단계가 있지만 잘 보이지 않는 이유는 계산이 우리 사고 과정에 녹아있기 때문</li>
+</ul>
+<h3 class="max-w-[90%] my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">데이터</h3>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">의미를 담는 방법: 자료구조 활용</li>
+<li class="ml-2 list-inside list-disc">불변성
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">copy-on-write: 변경할 때 복사본 만들기</li>
+<li class="ml-2 list-inside list-disc">방어적 복사 defensive copy: 보관하려고 하는 데이터의 복사본 만들기</li>
+</ul>
+</li>
+<li class="ml-2 list-inside list-disc">데이터로 할 수 있는 것
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">직렬화</li>
+<li class="ml-2 list-inside list-disc">동일성 비교</li>
+<li class="ml-2 list-inside list-disc">자유로운 해석/활용</li>
+</ul>
+</li>
+</ul>
+<h3 class="max-w-[90%] my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">계산 (순수함수/수학함수)</h3>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">의미를 담는 방법: 연산</li>
+<li class="ml-2 list-inside list-disc">액션보다 계산이 좋은 이유
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">테스트하기 쉽다</li>
+<li class="ml-2 list-inside list-disc">기계적 분석이 쉽다; 정적 분석 - 자동화 분석</li>
+<li class="ml-2 list-inside list-disc">조합하기 좋다; 계산을 조합해 더 큰 계산 만들기</li>
+</ul>
+</li>
+</ul>
+<h3 class="max-w-[90%] my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">액션 (순수하지 않은 함수/부수효과 함수)</h3>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">의미를 담는 방법: 외부 세상에 영향을 주는 일</li>
+<li class="ml-2 list-inside list-disc">다루기 힘들지만, 액션은 꼭 써야 함</li>
+</ul>
+<h4 class="max-w-[90%] my-2 ml-2 text-xl text-indigo-200/90 font-bold underline whitespace-normal break-words">액션을 잘 사용하는 방법</h4>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">가능한 적게 사용; 액션 대신 계산을 사용할 수 있는지 고민</li>
+<li class="ml-2 list-inside list-disc">가능한 작게 만들기; 액션에서 액션과 관련 없는 코드는 모두 제거</li>
+<li class="ml-2 list-inside list-disc">외부 세계와 상호작용하는 것을 제한; 어니언 아키텍처(👉 18장)</li>
+<li class="ml-2 list-inside list-disc">호출 시점/횟수에 의존하는 것을 제한</li>
+</ul>
+<br/>
+<h3 class="max-w-[90%] my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">함수형 사고 적용하기</h3>
+<h4 class="max-w-[90%] my-2 ml-2 text-xl text-indigo-200/90 font-bold underline whitespace-normal break-words">새로 코드 구현 순서</h4>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">데이터</li>
+<li class="ml-2 list-inside list-disc">계산
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">잘 만들어진 시스템이라면, 추상적인 개념이 바뀌지 않는 한 계산은 바뀌지 않아야</li>
+</ul>
+</li>
+<li class="ml-2 list-inside list-disc">액션</li>
+</ul>
+<h4 class="max-w-[90%] my-2 ml-2 text-xl text-indigo-200/90 font-bold underline whitespace-normal break-words">기존 코드에 적용</h4>
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">액션을 활용하는 함수도 액션
+<ul class="max-w-[90%] ml-2">
+<li class="ml-2 list-inside list-disc">=&gt; 액션은 코드 전체로 퍼진다</li>
+<li class="ml-2 list-inside list-disc">어떤 함수가 액션인지 명확하게 구분할 수 있어야</li>
+</ul>
+</li>
+</ul>
+
+        <!-- TODO: seperate component -->
+        <div class="text-sm text-indigo-200 italic font-light cursor-default">
+          #develop #fp
+        </div>
+      </article>
+</main>
+  </body>
+</html>
