@@ -1,5 +1,6 @@
 ---
 import { Title } from '@features/ui/title';
+import { Description } from '@features/ui/description';
 import { default as DefaultLayout } from './default-layout.astro';
 
 const { frontmatter } = Astro.props;
@@ -17,10 +18,12 @@ const { frontmatter } = Astro.props;
       <article
         class="m-4 h-full overflow-auto text-indigo-50/90 select-none text-lg"
       >
+        <Description>{frontmatter.description}</Description>
+        
         <slot />
 
         <!-- TODO: seperate component -->
-        <div class="text-sm text-indigo-200 italic font-light cursor-default">
+        <div class="pt-4 text-sm text-indigo-200/90 italic font-light cursor-default text-right">
           {
             (frontmatter.tags ?? '')
               .split(', ')
