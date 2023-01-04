@@ -19,13 +19,13 @@
 <p>테스트하기 쉽고 재사용 하기 좋은 코드를 만들기 위해 리팩터링 하는 방법</p>
 </blockquote>
 <h2 id="장바구니-로직-개선하기" class="mt-6 mb-4 text-5xl text-indigo-100 font-extrabold whitespace-normal break-words">장바구니 로직 개선하기</h2>
-<ul class="ml-2">
+<ul class="ml-2 mb-2">
 <li class="ml-2 list-inside list-disc">장바구니 총액</li>
 <li class="ml-2 list-inside list-disc">구매 합계가 특정 금액 이상이면 무료 배송</li>
 <li class="ml-2 list-inside list-disc">금액 합계 바뀔 때마다 세금 계산</li>
 </ul>
 <h3 id="테스트재사용하기-쉽게-만들기" class="my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">테스트/재사용하기 쉽게 만들기</h3>
-<ul class="ml-2">
+<ul class="ml-2 mb-2">
 <li class="ml-2 list-inside list-disc">DOM 업데이트와 비즈니스 규칙 분리</li>
 <li class="ml-2 list-inside list-disc">DOM을 사용할 수 있는 곳에서 실행된다고 가정하지 않기</li>
 <li class="ml-2 list-inside list-disc">전역변수(공유변수) 제거</li>
@@ -33,7 +33,7 @@
 </ul>
 <h3 id="함수의-입출력" class="my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">함수의 입/출력</h3>
 <p>함수에 암묵적 입/출력이 있으면 액션이 된다</p>
-<ul class="ml-2">
+<ul class="ml-2 mb-2">
 <li class="ml-2 list-inside list-disc">암묵적 입력: 인자 외 다른 입력</li>
 <li class="ml-2 list-inside list-disc">암묵적 출력: 리턴값 외 다른 출력</li>
 </ul>
@@ -41,12 +41,12 @@
 <br/>
 <h2 id="액션에서-계산-빼내기" class="mt-6 mb-4 text-5xl text-indigo-100 font-extrabold whitespace-normal break-words">액션에서 계산 빼내기</h2>
 <h3 id="서브루틴-추출-extract-subroutine" class="my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">서브루틴 추출 <em>extract subroutine</em></h3>
-<ul class="ml-2">
+<ul class="ml-2 mb-2">
 <li class="ml-2 list-inside list-disc">계산에 해당하는 코드를 함수로 분리</li>
 <li class="ml-2 list-inside list-disc">전역변수 입/출력을 명시적 입/출력으로 변경
-<ul class="ml-2">
+<ul class="ml-2 mb-2">
 <li class="ml-2 list-inside list-disc">copy-on-write
-<ul class="ml-2">
+<ul class="ml-2 mb-2">
 <li class="ml-2 list-inside list-disc">전역 변수를 명시적 입력으로 받았을 때, 함수안에서 복사본 만들기</li>
 <li class="ml-2 list-inside list-disc">ex. 배열이 입력으로 들어오고 배열 내 값을 변경해야 하는 경우, 배열 복사본을 만들어서 복사본을 변경하고 리턴</li>
 </ul>
