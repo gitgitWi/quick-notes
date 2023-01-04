@@ -23,7 +23,7 @@ const [latestPage, ...restPages] = pages.sort(
     <DefaultLayout>
       <Title>Quick Notes</Title>
       <hr />
-      <section>
+      <section class="overflow-y-auto">
         <BigCard
           title={latestPage.frontmatter.title}
           description={latestPage.frontmatter.description ?? ''}
