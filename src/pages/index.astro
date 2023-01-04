@@ -1,6 +1,6 @@
 ---
 import type { AstroPostPage } from '@/types';
-import { FontStyleSheets } from '@features/heads';
+import { FontStyleSheets, MetaSeo } from '@features/heads';
 import { DefaultLayout } from '@features/ui/layouts';
 import { Title } from '@features/ui/title';
 import { BigCard } from '@features/cards';
@@ -17,6 +17,12 @@ const [latestPage, ...restPages] = pages.sort(
   <head>
     <title>Quick Notes</title>
     <FontStyleSheets />
+    <MetaSeo
+      ogType="website"
+      title="Quick Notes"
+      description="Quick Notes by @gitgitWi"
+      url="https://gitgitWi.github.io/quick-notes/"
+    />
   </head>
 
   <body>
