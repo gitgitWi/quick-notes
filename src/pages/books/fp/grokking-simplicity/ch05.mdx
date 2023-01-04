@@ -1,0 +1,115 @@
+---
+layout: '@features/ui/layouts/post-layout.astro'
+title: '더 좋은 액션 만들기'
+description: '쏙쏙 들어오는 함수형 코딩 Ch05'
+updatedAt: '2023-01-03T23:33:00.000Z'
+tags: 'develop, fp'
+---
+
+import { DEFAULT_CUSTOM_COMPONENTS } from '@features/mdx';
+export const components = DEFAULT_CUSTOM_COMPONENTS;
+
+> _액션은 필요하다. 모든 액션을 없앨 수는 없다._
+>
+> _액션에서 암묵적 입/출력을 줄여 설계를 개선하자_
+
+## 암묵적 입력과 출력은 적을수록 좋다
+
+계산 뿐만 아니라, 액션에서도
+
+- 어떤 함수에 암묵적 입/출력이 있다면 다른 컴포넌트와 강하게 연결된 컴포넌트
+- 다른 곳에서 사용할 수 없기 때문에 모듈이 아님
+
+### 암묵적 입/출력 줄이는 방법
+
+- 전역/공용 변수를 직접 사용하는 대신 인자를 전달
+- 중복, 불필요한 코드 있는지 확인
+- 과한 코드는 다른 함수 안으로 옮기기
+
+### 계산 분류하기
+
+#### 의미 있는 계층별로 계산 분류
+
+- 장바구니 코드
+  - cart에 대한 동작
+  - item에 대한 동작
+  - 비즈니스 규칙: 일반적인 전자상거래 서비스와는 다른 이 서비스만의 특별한 규칙
+
+### 엉켜있는 코드 풀기
+
+설계는 엉켜있는 코드를 푸는 것
+
+- 함수를 사용하면 관심사를 자연스럽게 분리할 수 있음
+- 분리된 것은 언제든 쉽게 조합할 수 있음
+
+#### `addItem()`을 분리해 더 좋은 설계 만들기
+
+**기존코드**
+
+- 간단해 보이지만 4가지 역할을 하고 있음
+- cart와 item 구조를 모두 알고 있음
+
+```javascript
+function addItem(cart, name, price) {
+  // 1. 배열 복사
+  const newCart = cart.slice();
+  // 2. item 객체 생성
+  // 3. 복사본에 item 추가
+  newCart.push({ name, price });
+  // 4. 복사본 리턴
+  return newCart;
+}
+```
+
+<br />
+
+**item에 관한 코드를 별도 함수로 분리**
+
+- `makeCartItem`: item 구조만 알고 있는 함수
+- `addItem`: cart 구조만 알고 있는 함수
+- 👉 cart, item을 독립적으로 확장할 수 있음
+
+```javascript
+function makeCartItem(name, price) {
+  return { name, price };
+}
+
+function addItem(cart, item) {
+  const newCart = cart.slice();
+  newCart.push(item);
+  return newCart;
+}
+```
+
+<br />
+
+**`copy-on-write` 패턴 빼내기**
+
+- addItem은 크기가 작고 괜찮은 함수이지만
+- `copy-on-write`를 사용해 배열에 항목을 추가하는 함수이므로, 이 부분을 분리
+- 어떤 배열/항목에도 쓸 수 있는 유틸리티 함수로 분리
+
+```javascript
+// `copy-on-write` 분리
+function addElementLast(array, elem) {
+  const newArray = array.slice();
+  newArray.push(elem);
+  return newArray;
+}
+
+function makeCartItem(name, price) {
+  return { name, price };
+}
+
+function addItem(cart, item) {
+  return addElementLast(cart, item);
+}
+```
+
+**계산 분류 다시하기**
+
+- 장바구니 코드
+  - cart에 대한 동작
+  - item에 대한 동작
+  - 비즈니스 규칙
+  - **배열 유틸리티** 👈 새로 추가됨
