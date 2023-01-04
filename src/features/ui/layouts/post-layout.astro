@@ -1,5 +1,5 @@
 ---
-import { FontStyleSheets } from '@features/web-fonts';
+import { FontStyleSheets, MetaSeo } from '@features/heads';
 import { Title } from '@features/ui/title';
 import { Description } from '@features/ui/description';
 import { default as DefaultLayout } from './default-layout.astro';
@@ -11,6 +11,11 @@ const { frontmatter } = Astro.props;
   <head>
     <title>{frontmatter.title} | QuickNotes</title>
     <FontStyleSheets />
+    <MetaSeo
+      title={frontmatter.title}
+      url={frontmatter.url}
+      description={frontmatter.description}
+    />
   </head>
   <body>
     <DefaultLayout>
