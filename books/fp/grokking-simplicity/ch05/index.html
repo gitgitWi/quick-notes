@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>더 좋은 액션 만들기 | QuickNotes</title>
-  <link rel="stylesheet" href="/quick-notes/assets/ch01.30664a0f.css" />
+  <link rel="stylesheet" href="/quick-notes/assets/ch01.a4c993fb.css" />
 <link rel="stylesheet" href="/quick-notes/assets/index.7535fdec.css" /></head>
   <body>
     <main class="w-full md:max-w-screen-lg h-full flex flex-col justify-start border border-indigo-50/70">
@@ -50,7 +50,7 @@
 <li class="ml-2 list-inside list-disc">간단해 보이지만 4가지 역할을 하고 있음</li>
 <li class="ml-2 list-inside list-disc">cart와 item 구조를 모두 알고 있음</li>
 </ul>
-<pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code class="p-1 rounded-md font-mono font-medium bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#FF7B72">function</span><span style="color:#C9D1D9"> </span><span style="color:#D2A8FF">addItem</span><span style="color:#C9D1D9">(</span><span style="color:#FFA657">cart</span><span style="color:#C9D1D9">, </span><span style="color:#FFA657">name</span><span style="color:#C9D1D9">, </span><span style="color:#FFA657">price</span><span style="color:#C9D1D9">) {</span></span>
+<pre class="w-11/12 p-2 pl-4 m-2 rounded-xl overflow-x-auto bg-slate-900/40 text-sm _codeSnippet_1fksl_1"><code class="p-1 rounded-md font-mono font-medium bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#FF7B72">function</span><span style="color:#C9D1D9"> </span><span style="color:#D2A8FF">addItem</span><span style="color:#C9D1D9">(</span><span style="color:#FFA657">cart</span><span style="color:#C9D1D9">, </span><span style="color:#FFA657">name</span><span style="color:#C9D1D9">, </span><span style="color:#FFA657">price</span><span style="color:#C9D1D9">) {</span></span>
 <span class="line"><span style="color:#C9D1D9">  </span><span style="color:#8B949E">// 1. 배열 복사</span></span>
 <span class="line"><span style="color:#C9D1D9">  </span><span style="color:#FF7B72">const</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">newCart</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">=</span><span style="color:#C9D1D9"> cart.</span><span style="color:#D2A8FF">slice</span><span style="color:#C9D1D9">();</span></span>
 <span class="line"><span style="color:#C9D1D9">  </span><span style="color:#8B949E">// 2. item 객체 생성</span></span>
@@ -66,7 +66,7 @@
 <li class="ml-2 list-inside list-disc"><code class="p-1 rounded-md font-mono font-medium bg-indigo-400 text-indigo-800">addItem</code>: cart 구조만 알고 있는 함수</li>
 <li class="ml-2 list-inside list-disc">👉 cart, item을 독립적으로 확장할 수 있음</li>
 </ul>
-<pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code class="p-1 rounded-md font-mono font-medium bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#FF7B72">function</span><span style="color:#C9D1D9"> </span><span style="color:#D2A8FF">makeCartItem</span><span style="color:#C9D1D9">(</span><span style="color:#FFA657">name</span><span style="color:#C9D1D9">, </span><span style="color:#FFA657">price</span><span style="color:#C9D1D9">) {</span></span>
+<pre class="w-11/12 p-2 pl-4 m-2 rounded-xl overflow-x-auto bg-slate-900/40 text-sm _codeSnippet_1fksl_1"><code class="p-1 rounded-md font-mono font-medium bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#FF7B72">function</span><span style="color:#C9D1D9"> </span><span style="color:#D2A8FF">makeCartItem</span><span style="color:#C9D1D9">(</span><span style="color:#FFA657">name</span><span style="color:#C9D1D9">, </span><span style="color:#FFA657">price</span><span style="color:#C9D1D9">) {</span></span>
 <span class="line"><span style="color:#C9D1D9">  </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> { name, price };</span></span>
 <span class="line"><span style="color:#C9D1D9">}</span></span>
 <span class="line"></span>
@@ -82,7 +82,7 @@
 <li class="ml-2 list-inside list-disc"><code class="p-1 rounded-md font-mono font-medium bg-indigo-400 text-indigo-800">copy-on-write</code>를 사용해 배열에 항목을 추가하는 함수이므로, 이 부분을 분리</li>
 <li class="ml-2 list-inside list-disc">어떤 배열/항목에도 쓸 수 있는 유틸리티 함수로 분리</li>
 </ul>
-<pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code class="p-1 rounded-md font-mono font-medium bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#8B949E">// `copy-on-write` 분리</span></span>
+<pre class="w-11/12 p-2 pl-4 m-2 rounded-xl overflow-x-auto bg-slate-900/40 text-sm _codeSnippet_1fksl_1"><code class="p-1 rounded-md font-mono font-medium bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#8B949E">// `copy-on-write` 분리</span></span>
 <span class="line"><span style="color:#FF7B72">function</span><span style="color:#C9D1D9"> </span><span style="color:#D2A8FF">addElementLast</span><span style="color:#C9D1D9">(</span><span style="color:#FFA657">array</span><span style="color:#C9D1D9">, </span><span style="color:#FFA657">elem</span><span style="color:#C9D1D9">) {</span></span>
 <span class="line"><span style="color:#C9D1D9">  </span><span style="color:#FF7B72">const</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">newArray</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">=</span><span style="color:#C9D1D9"> array.</span><span style="color:#D2A8FF">slice</span><span style="color:#C9D1D9">();</span></span>
 <span class="line"><span style="color:#C9D1D9">  newArray.</span><span style="color:#D2A8FF">push</span><span style="color:#C9D1D9">(elem);</span></span>
