@@ -1,0 +1,21 @@
+---
+import type { Frontmatter } from '@/types';
+type Props = Partial<Frontmatter> & { ogType?: 'article' | 'website' };
+const { title, url, description, ogType = 'article' } = Astro.props;
+---
+
+<>
+  <meta name="title" content={title} />
+  <meta name="description" content={description} />
+  <meta property="og:url" content={url} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:locale" content="ko-KR" />
+  <!-- TODO: thumbnail image -->
+  <!-- <meta property="og:image" content="" /> -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <!-- <meta name="twitter:image" content="" /> -->
+</>
