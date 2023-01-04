@@ -3,7 +3,7 @@ import type { AstroPostPage } from '@/types';
 import { FontStyleSheets } from '@features/web-fonts';
 import { DefaultLayout } from '@features/ui/layouts';
 import { Title } from '@features/ui/title';
-import { BigCard, NormalCard } from '@features/cards';
+import { BigCard } from '@features/cards';
 
 const pages = await Astro.glob<AstroPostPage>('./**/*.{md,mdx}');
 const [latestPage, ...restPages] = pages.sort(
@@ -23,7 +23,7 @@ const [latestPage, ...restPages] = pages.sort(
     <DefaultLayout>
       <Title>Quick Notes</Title>
       <hr />
-      <section>
+      <section class="overflow-y-auto">
         <BigCard
           title={latestPage.frontmatter.title}
           description={latestPage.frontmatter.description ?? ''}
@@ -32,10 +32,12 @@ const [latestPage, ...restPages] = pages.sort(
           tags={latestPage.frontmatter.tags}
         />
 
+        <!-- TODO: need difference b/w big-card - normal-card except description -->
         {
           restPages.map((page) => (
-            <NormalCard
+            <BigCard
               title={page.frontmatter.title}
+              description={page.frontmatter.description ?? ''}
               url={page.url}
               updatedAt={page.frontmatter.updatedAt}
               tags={page.frontmatter.tags}
