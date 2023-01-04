@@ -11,6 +11,8 @@ const configs = {
         sans: ['Pretendard Variable', 'Pretendard'].concat(
           defaultTheme.fontFamily.sans
         ),
+        serif: ['Noto Serif KR'].concat(defaultTheme.fontFamily.serif),
+        mono: ['Noto Sans Mono'].concat(defaultTheme.fontFamily.mono),
       },
     },
   },
