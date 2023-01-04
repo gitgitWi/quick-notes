@@ -9,9 +9,9 @@ tags: 'develop, fp'
 import { DEFAULT_CUSTOM_COMPONENTS } from '@features/mdx';
 export const components = DEFAULT_CUSTOM_COMPONENTS;
 
-> _액션은 필요하다. 모든 액션을 없앨 수는 없다._
+> 액션은 필요하다. 모든 액션을 없앨 수는 없다.
 >
-> _액션에서 암묵적 입/출력을 줄여 설계를 개선하자_
+> 액션에서 암묵적 입/출력을 줄여 설계를 개선하자
 
 ## 암묵적 입력과 출력은 적을수록 좋다
 
@@ -44,7 +44,7 @@ export const components = DEFAULT_CUSTOM_COMPONENTS;
 
 #### `addItem()`을 분리해 더 좋은 설계 만들기
 
-**기존코드**
+##### 기존코드
 
 - 간단해 보이지만 4가지 역할을 하고 있음
 - cart와 item 구조를 모두 알고 있음
@@ -61,9 +61,7 @@ function addItem(cart, name, price) {
 }
 ```
 
-<br />
-
-**item에 관한 코드를 별도 함수로 분리**
+##### item에 관한 코드를 별도 함수로 분리
 
 - `makeCartItem`: item 구조만 알고 있는 함수
 - `addItem`: cart 구조만 알고 있는 함수
@@ -81,9 +79,7 @@ function addItem(cart, item) {
 }
 ```
 
-<br />
-
-**`copy-on-write` 패턴 빼내기**
+##### `copy-on-write` 패턴 빼내기
 
 - addItem은 크기가 작고 괜찮은 함수이지만
 - `copy-on-write`를 사용해 배열에 항목을 추가하는 함수이므로, 이 부분을 분리
@@ -106,7 +102,7 @@ function addItem(cart, item) {
 }
 ```
 
-**계산 분류 다시하기**
+##### 계산 분류 다시하기
 
 - 장바구니 코드
   - cart에 대한 동작
