@@ -1,6 +1,7 @@
 import { H2, H3, H4, H5 } from '@features/ui/headings';
 import { DefaultUl, DefaultUlLi } from '@features/ui/list';
 import { InlineCode, CodeSnippet } from '@features/ui/codes';
+import { DefaultCallout } from '@features/ui/callouts';
 
 export const DEFAULT_CUSTOM_COMPONENTS = Object.freeze({
   h2: H2,
@@ -11,4 +12,5 @@ export const DEFAULT_CUSTOM_COMPONENTS = Object.freeze({
   li: DefaultUlLi,
   code: InlineCode,
   pre: CodeSnippet,
+  blockquote: DefaultCallout,
 });
