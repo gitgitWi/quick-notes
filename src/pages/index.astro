@@ -1,5 +1,6 @@
 ---
 import type { AstroPostPage } from '@/types';
+import { FontStyleSheets } from '@features/web-fonts';
 import { DefaultLayout } from '@features/ui/layouts';
 import { Title } from '@features/ui/title';
 import { BigCard, NormalCard } from '@features/cards';
@@ -15,6 +16,7 @@ const [latestPage, ...restPages] = pages.sort(
 <html>
   <head>
     <title>Quick Notes</title>
+    <FontStyleSheets />
   </head>
 
   <body>
