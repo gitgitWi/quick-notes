@@ -9,7 +9,7 @@ export default defineConfig({
   base: '/quick-notes',
   markdown: {
     shikiConfig: {
-      theme: 'material-palenight',
+      theme: 'nord',
       wrap: false,
     },
   },
