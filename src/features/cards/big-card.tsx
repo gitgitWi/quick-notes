@@ -21,7 +21,13 @@ export function BigCard({
   tags = '',
 }: BigCardProps) {
   return (
-    <article class="p-6 m-2 rounded-xl flex flex-col bg-indigo-200/80 select-none">
+    <article
+      class={[
+        'p-6 m-4 my-8 rounded-xl',
+        'flex flex-col select-none',
+        'bg-indigo-200/80 shadow-lg shadow-indigo-900/80',
+      ].join(' ')}
+    >
       {/* post type(memo/bookmark/summary..) badge? */}
       <a
         href={url}
