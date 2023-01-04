@@ -40,7 +40,7 @@ export function BigCard({
         {description && <CardDescription descriptionText={description} />}
       </a>
 
-      <div class="mt-2 flex flex-row justify-between text-sm text-indigo-900/60">
+      <div class="mt-2 flex flex-row justify-between items-end text-sm text-indigo-900/60">
         <CardTags tags={tags.split(TAG_SPLIT_REG)} />
         <CardUpdatedAt updatedAt={updatedAt} />
       </div>
