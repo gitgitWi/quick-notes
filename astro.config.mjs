@@ -7,4 +7,10 @@ export default defineConfig({
   integrations: [mdx(), tailwind(), preact()],
   site: 'https://gitgitWi.github.io',
   base: '/quick-notes',
+  markdown: {
+    shikiConfig: {
+      theme: 'material-palenight',
+      wrap: false,
+    },
+  },
 });
