@@ -8,7 +8,9 @@ export function Description({ classNames = [], children }: DescriptionProps) {
   return (
     <blockquote
       class={[
-        'w-max max-w-full mb-4 py-4 px-6 rounded-2xl font-semibold font-serif italic text-lg bg-indigo-300/90 text-indigo-700',
+        'm-2 mb-6 py-2 px-6',
+        'border-b-2 border-indigo-200/60 border-double',
+        'font-semibold font-serif text-lg text-indigo-200/90',
       ]
         .concat(classNames)
         .join(' ')}
