@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>패턴을 잘못 쓰는 것이 진짜 안티 패턴 | QuickNotes</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-dynamic-subset.css"><link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;600&family=Noto+Serif+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <meta name="title" content="패턴을 잘못 쓰는 것이 진짜 안티 패턴"><meta name="description" content="오늘의 뜨끔 - 포프TV &#34;싱글톤 패턴은 안티 패턴인가?&#34;를 보다가"><meta property="og:url" content="https://gitgitWi.github.io/quick-notes/memo/2023-01-05"><meta property="og:type" content="article"><meta property="og:title" content="패턴을 잘못 쓰는 것이 진짜 안티 패턴"><meta property="og:description" content="오늘의 뜨끔 - 포프TV &#34;싱글톤 패턴은 안티 패턴인가?&#34;를 보다가"><meta property="og:locale" content="ko-KR"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="패턴을 잘못 쓰는 것이 진짜 안티 패턴"><meta name="twitter:description" content="오늘의 뜨끔 - 포프TV &#34;싱글톤 패턴은 안티 패턴인가?&#34;를 보다가">
+
+  <link rel="stylesheet" href="/quick-notes/assets/ch01.e0397ea7.css" />
+<link rel="stylesheet" href="/quick-notes/assets/index.df67bca3.css" /></head>
+  <body>
+    <main class="w-full md:max-w-screen-lg h-full flex flex-col justify-start border border-indigo-50/70">
+  <h1 class="w-full h-max p-4 text-center text-7xl font-extrabold text-indigo-50 select-none _textShadow_1mk9d_1">
+  패턴을 잘못 쓰는 것이 진짜 안티 패턴
+</h1><article class="m-4 h-full overflow-auto text-indigo-50/90 select-none text-lg">
+        <blockquote class="m-2 mb-6 py-2 px-6 border-b-2 border-indigo-200/60 border-double font-semibold font-serif text-lg text-indigo-200/90">오늘의 뜨끔 - 포프TV &quot;싱글톤 패턴은 안티 패턴인가?&quot;를 보다가</blockquote>
+
+        <blockquote class="m-2 p-4 px-6 rounded-md font-serif italic text-base font-semibold leading-8 bg-indigo-300/90 text-indigo-900 shadow-md shadow-indigo-800/70">
+<p>디자인 패턴 어줍짢게 쓰지 마라</p>
+</blockquote>
+
+<a href="https://ibb.co/TbkY46r"><img src="https://i.ibb.co/nnb679R/Screenshot-2023-01-05-at-9-50-10.png" alt="https://i.ibb.co/nnb679R/Screenshot-2023-01-05-at-9-50-10.png" class="my-2 rounded-xl shadow shadow-indigo-900/80"/></a><a href="https://ibb.co/FXxr9Vd"><img src="https://i.ibb.co/C61cq2S/Screenshot-2023-01-05-at-10-04-09.png" alt="https://i.ibb.co/C61cq2S/Screenshot-2023-01-05-at-10-04-09.png" class="my-2 rounded-xl shadow shadow-indigo-900/80"/></a><a href="https://ibb.co/9VNrNmg"><img src="https://i.ibb.co/SdP3PDy/Screenshot-2023-01-05-at-10-06-31.png" alt="https://i.ibb.co/SdP3PDy/Screenshot-2023-01-05-at-10-06-31.png" class="my-2 rounded-xl shadow shadow-indigo-900/80"/></a>
+<ul class="ml-2 mb-2">
+<li class="ml-2 list-inside list-disc">처음엔, 요즘에 싱글턴을 안티 패턴이라고 하는 사람이 어딨나 싶어서 가볍게 보다가, 막판에 뜨끔하면서 봤다</li>
+<li class="ml-2 list-inside list-disc">딱 경력 2년이 안되는 내가 코드 좀 잘 짜보겠다고 디자인 패턴 책 보면서 실무 코드에 이것저것 적용해본 것들이 있는데, 작년에 봤던 면접에서, “꼭 그렇게까지 했어야 했는지, 오버 엔지니어링 아닌지”를 묻는 질문에 명확하게 답하지 못했던 기억이 있기 때문이다</li>
+<li class="ml-2 list-inside list-disc">요즘 <code class="p-1 rounded-md font-mono text-base bg-indigo-400 text-indigo-800">함수형 코딩</code>을 읽으면서도 느끼는 거지만.. 명확한 기준 없이, 어떤 것이 적정 기술인지 제대로 고민해보지 않고, 단순히 코드 생긴게 지저분하니까 어떻게든 함수 분리하고 고치면 되겠지라는 마음으로 리팩토링을 하거나 무분별하게 패턴/아키텍처를 적용해보려고 할 때가 있는데 이런 태도는 주의해야 할 듯</li>
+</ul>
+
+        <!-- TODO: seperate component -->
+        <div class="pt-4 text-sm text-indigo-200/90 italic font-light cursor-default text-right">
+          #develop #design_pattern #anti_pattern #over_engineering
+        </div>
+      </article>
+</main>
+  </body>
+</html>
