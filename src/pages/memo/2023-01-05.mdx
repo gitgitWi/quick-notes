@@ -1,0 +1,26 @@
+---
+layout: '@features/ui/layouts/post-layout.astro'
+title: '패턴을 잘못 쓰는 것이 진짜 안티 패턴'
+description: '오늘의 뜨끔 - 포프TV "싱글톤 패턴은 안티 패턴인가?"를 보다가'
+updatedAt: '2023-01-05T00:55:34.095Z'
+tags: 'develop, design_pattern, anti_pattern, over_engineering'
+---
+
+import { DEFAULT_CUSTOM_COMPONENTS } from '@features/mdx';
+export const components = DEFAULT_CUSTOM_COMPONENTS;
+
+> 디자인 패턴 어줍짢게 쓰지 마라
+
+{/* TODO: implement img component */}
+{
+[['https://ibb.co/TbkY46r', 'https://i.ibb.co/nnb679R/Screenshot-2023-01-05-at-9-50-10.png'],
+['https://ibb.co/FXxr9Vd', 'https://i.ibb.co/C61cq2S/Screenshot-2023-01-05-at-10-04-09.png'],
+['https://ibb.co/9VNrNmg', 'https://i.ibb.co/SdP3PDy/Screenshot-2023-01-05-at-10-06-31.png'],]
+.map(([viewerUrl, previewUrl]) =>
+(<a href={viewerUrl}><img src={previewUrl} alt={previewUrl} class="my-2 rounded-xl shadow shadow-indigo-900/80" /></a>)
+)
+}
+
+- 처음엔, 요즘에 싱글턴을 안티 패턴이라고 하는 사람이 어딨나 싶어서 가볍게 보다가, 막판에 뜨끔하면서 봤다
+- 딱 경력 2년이 안되는 내가 코드 좀 잘 짜보겠다고 디자인 패턴 책 보면서 실무 코드에 이것저것 적용해본 것들이 있는데, 작년에 봤던 면접에서, "꼭 그렇게까지 했어야 했는지, 오버 엔지니어링 아닌지"를 묻는 질문에 명확하게 답하지 못했던 기억이 있기 때문이다
+- 요즘 `함수형 코딩`을 읽으면서도 느끼는 거지만.. 명확한 기준 없이, 어떤 것이 적정 기술인지 제대로 고민해보지 않고, 단순히 코드 생긴게 지저분하니까 어떻게든 함수 분리하고 고치면 되겠지라는 마음으로 리팩토링을 하거나 무분별하게 패턴/아키텍처를 적용해보려고 할 때가 있는데 이런 태도는 주의해야 할 듯
