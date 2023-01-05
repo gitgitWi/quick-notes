@@ -5,5 +5,5 @@ import type { PropsWithClassNames, PropsWithPreactChildren } from '@/types';
 type UlProps = PropsWithClassNames<PropsWithPreactChildren>;
 
 export function DefaultUl({ classNames = [], children }: UlProps) {
-  return <ul class={['ml-2'].concat(classNames).join(' ')}>{children}</ul>;
+  return <ul class={['ml-2 mb-2'].concat(classNames).join(' ')}>{children}</ul>;
 }
