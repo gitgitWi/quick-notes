@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>신뢰할 수 없는 코드를 쓰면서 불변성 지키기 | QuickNotes</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-dynamic-subset.css"><link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;600&family=Noto+Serif+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <meta name="title" content="신뢰할 수 없는 코드를 쓰면서 불변성 지키기"><meta name="description" content="[쏙쏙 들어오는 함수형 코딩 Ch07] 레거시 코드, 신뢰할 수 없는 코드에서 내 코드를 보호하기 위한 방어적 복사"><meta property="og:url" content="https://gitgitWi.github.io/quick-notes/books/fp/grokking-simplicity/ch07"><meta property="og:type" content="article"><meta property="og:title" content="신뢰할 수 없는 코드를 쓰면서 불변성 지키기"><meta property="og:description" content="[쏙쏙 들어오는 함수형 코딩 Ch07] 레거시 코드, 신뢰할 수 없는 코드에서 내 코드를 보호하기 위한 방어적 복사"><meta property="og:locale" content="ko-KR"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="신뢰할 수 없는 코드를 쓰면서 불변성 지키기"><meta name="twitter:description" content="[쏙쏙 들어오는 함수형 코딩 Ch07] 레거시 코드, 신뢰할 수 없는 코드에서 내 코드를 보호하기 위한 방어적 복사">
+
+  <link rel="stylesheet" href="/quick-notes/assets/ch01.e0397ea7.css" />
+<link rel="stylesheet" href="/quick-notes/assets/index.df67bca3.css" /></head>
+  <body>
+    <main class="w-full md:max-w-screen-lg h-full flex flex-col justify-start border border-indigo-50/70">
+  <h1 class="w-full h-max p-4 text-center text-7xl font-extrabold text-indigo-50 select-none _textShadow_1mk9d_1">
+  신뢰할 수 없는 코드를 쓰면서 불변성 지키기
+</h1><article class="m-4 h-full overflow-auto text-indigo-50/90 select-none text-lg">
+        <blockquote class="m-2 mb-6 py-2 px-6 border-b-2 border-indigo-200/60 border-double font-semibold font-serif text-lg text-indigo-200/90">[쏙쏙 들어오는 함수형 코딩 Ch07] 레거시 코드, 신뢰할 수 없는 코드에서 내 코드를 보호하기 위한 방어적 복사</blockquote>
+
+        <h2 id="방어적-복사-defensive-copy" class="mt-6 mb-4 text-5xl text-indigo-100 font-extrabold whitespace-normal break-words">방어적 복사 <code><em>defensive copy</em></code></h2>
+<p>copy-on-write 원칙을 지키면서 안전하게 함수를 사용하기 위한 원칙</p>
+<h3 id="안전지대" class="my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">안전지대</h3>
+<ul class="ml-2 mb-2">
+<li class="ml-2 list-inside list-disc">불변성이 지켜지는 코드들, 걱정 없이 쓸 수 있음</li>
+<li class="ml-2 list-inside list-disc">안전지대 안으로 들어오는 데이터, 밖으로 나가는 데이터는 잠재적으로 바뀔 수 있다는 문제</li>
+<li class="ml-2 list-inside list-disc">무엇이 바뀌는지, 무엇을 복사해야할 지 예상할 수 없기 때문에, copy-on-write 패턴으로는 이 문제를 해결할 수 없음</li>
+</ul>
+<h3 id="규칙-안전지대-전-후로-깊은-복사" class="my-4 text-3xl text-indigo-100/90 font-semibold italic whitespace-normal break-words">규칙: 안전지대 전-후로 깊은 복사</h3>
+<p>방어적 복사는 <strong>깊은 복사</strong>로 원본 데이터 불변성 유지</p>
+<ul class="ml-2 mb-2">
+<li class="ml-2 list-inside list-disc">데이터가 들어올 때 깊은 복사로 만든 복사본 활용하고, 변경 가능한 원본은 버림</li>
+<li class="ml-2 list-inside list-disc">안전지대 데이터가 나갈 때 깊은 복사한 복사본을 내보내서, 원본 데이터 불변성 유지</li>
+<li class="ml-2 list-inside list-disc">어디서 어떻게 바뀔지 모르기 때문</li>
+<li class="ml-2 list-inside list-disc">외부와 공유하는 데이터 구조가 없기 때문에, 비공유 아키텍처 <em>shared nothing architecture</em> 를 구현하기 좋음</li>
+<li class="ml-2 list-inside list-disc">다만 깊은 복사 따른 연산/메모리 비용이 큼</li>
+</ul>
+
+        <!-- TODO: seperate component -->
+        <div class="pt-4 text-sm text-indigo-200/90 italic font-light cursor-default text-right">
+          #develop #fp #immutability
+        </div>
+      </article>
+</main>
+  </body>
+</html>
