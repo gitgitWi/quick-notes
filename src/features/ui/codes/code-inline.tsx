@@ -8,7 +8,7 @@ export function InlineCode({ classNames = [], children }: InlineCodeProps) {
   return (
     <code
       class={[
-        'p-1 rounded-md font-mono font-medium bg-indigo-400 text-indigo-800',
+        'p-1 rounded-md font-mono text-base bg-indigo-400 text-indigo-800',
       ]
         .concat(classNames)
         .join(' ')}

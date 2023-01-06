@@ -1,0 +1,183 @@
+---
+layout: '@features/ui/layouts/post-layout.astro'
+title: '변경 가능한 데이터 구조를 가진 언어에서 불변성 유지하기'
+description: '쏙쏙 들어오는 함수형 코딩 Ch06 - copy-on-write, 배열과 객체에서 불변 데이터 다루기'
+updatedAt: '2023-01-04T17:06:44.080Z'
+tags: 'develop, fp, immutability'
+---
+
+import { DEFAULT_CUSTOM_COMPONENTS } from '@features/mdx';
+export const components = DEFAULT_CUSTOM_COMPONENTS;
+
+> 모든 동작을 불변형으로 만들 수 있을까?
+>
+> 중첩된 데이터에서 불변 동작을 구현할 수 있을까?
+
+## 동작을 읽기, 쓰기 또는 둘 다로 분류하기
+
+읽기
+
+- 데이터를 바꾸지 않고 정보를 꺼내는 것
+
+쓰기
+
+- 어떻게든 데이터를 바꿈
+- 바뀌는 값이 어디서 사용될지 모르기 때문에 바뀌지 않도록 원칙이 필요 👉 **불변성 원칙**
+
+## copy-on-write 원칙 세 단계
+
+지난 장에서 구현한 `addElementLast`로 보는 3 단계
+
+```javascript
+// 기존 배열 array 입력
+function addElementLast(array, elem) {
+  // 1. 복사본 만들기
+  const newArray = array.slice();
+  // 2. 복사본 변경하기
+  newArray.push(elem);
+  // 3. 복사본 리턴하기
+  return newArray;
+}
+```
+
+- 복사본을 만들고, 기존 배열은 변경하지 않음
+- 복사본은 함수 범위에 있기 때문에, 외부에서 값을 바꾸기 위해 접근할 수 없음
+- 복사본을 변경하고 리턴한 이후에는 값을 바꿀 수 없음
+
+**👉 데이터를 바꾸지 않고 정보를 리턴하기 때문에 읽기 동작**
+
+- 쓰기를 읽기로 바꾼 것
+
+## 쓰기와 읽기를 동시에 하는 동작은?
+
+ex. `Array.prototype.shift`
+
+```javascript
+const a = [1, 2, 3, 4];
+const b = a.shift(); // 값을 바꾸는 동시에 배열 첫 번째 항목을 리턴
+console.log(b); // 1
+console.log(a); // [2, 3, 4]
+```
+
+### 두가지 방법
+
+#### 읽기와 쓰기 함수로 각각 분리
+
+책임이 확실히 분리되기 때문에 더 좋음
+
+##### 1. 읽기 - 쓰기 동작으로 분리
+
+```javascript
+// 읽기 동작
+function getFistElement(array) {
+  return array[0];
+}
+
+// 쓰기 동작
+// 리턴값을 사용하지 않으므로 리턴하지 않음
+function dropFistElement(array) {
+  array.shift();
+}
+```
+
+##### 2. 쓰기 동작을 copy-on-write로 바꾸기
+
+```javascript
+function dropFistElement(array) {
+  const copiedArray = array.slice();
+  copiedArray.shift();
+  return copiedArray;
+}
+```
+
+#### 함수에서 값을 두 개 리턴
+
+##### 1. 동작을 감싸기
+
+메서드를 바꿀 수 있도록 새로운 함수로 감싸기
+
+```javascript
+function shift(array) {
+  return array.shift();
+}
+```
+
+##### 2. 읽기 전용 함수로 바꾸기
+
+copy-on-write 활용
+
+```javascript
+function shift(array) {
+  const copiedArray = array.slice();
+  const firstElement = copiedArray.shift();
+  return { firstElement, copiedArray };
+}
+```
+
+> - 변경 가능한 데이터를 읽는 것은 액션, 읽을 때마다 다른 값을 읽을 수도 있음
+> - 쓰기는 데이터를 변경 가능한 구조로 만듦
+> - 어떤 데이터에 쓰기가 없다면 데이터는 변경 불가능한 데이터가 되고, 불변 데이터 구조를 읽는 것은 계산
+> - 따라서 쓰기를 읽기로 바꿀수록, 데이터를 불변형으로 만들수록, 코드에 계산이 많아지고 액션이 줄어든다
+
+## 불변 데이터 구조에 대한 오해와 사실
+
+- 변경 가능한 데이터 구조보다 메모리를 더 많이 쓰고 느림
+- 그럼에도 불변 데이터 구조를 사용하면서 대용량 고성능 시스템을 구현하는 사례는 많고, 이는 일반 애플리케이션에 쓰기 충분히 빠르다는 것
+  - 언제든 최적화할 수 있음: 섣부른 최적화는 하지 않는 것, 불변 데이터 구조를 사용하고 속도가 느린 부분이 있으면 그때 최적화
+  - 가비지 콜렉터는 매우 빠름: 대부분의 언어에서는 가비지 콜렉터 성능이 꾸준히 개선되어 옴
+  - 생각보다 많이 복사하지 않음
+  - FP 언어에는 빠른 구현체가 있음
+    - 데이터 구조를 복사 할 때 최대한 많은 구조적 공유(얕은 복사)
+    - 불변 데이터 구조에서 구조적 공유는 안전하고, 메모리를 적게 사용함
+
+## 객체에 대한 copy-on-write
+
+### `Object.assign` 메서드 활용
+
+```javascript
+// 원래 코드
+function setPriceOrigin(item, newPrice) {
+  item.price = newPrice;
+}
+
+// copy-on-write
+function setPriceCopyOnWrite(item, newPrice) {
+  const copiedItem = Object.assign({}, item);
+  copiedItem.price = newPrice;
+  return copiedItem;
+}
+```
+
+### 중첩된 쓰기를 읽기로 바꾸기
+
+중첩된 쓰기도 중첩되지 않은 쓰기와 동일한 패턴
+
+**중첩된 모든 데이터 구조가 바뀌지 않아야 불변 데이터**
+
+- 중첩된 데이터 일부를 바꾸려면 변경하려는 값과 상위의 모든 값을 복사해야 함
+
+```javascript
+// 원래 코드
+function setPriceByName(cart, name, price) {
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].name === name) {
+      cart[i].price = price;
+    }
+  }
+}
+
+// copy-on-write
+function setPriceByName(cart, name, price) {
+  const copiedCart = cart.slice();
+  for (let i = 0; i < copiedCart.length; i++) {
+    if (copiedCart[i].name === name) {
+      copiedCart[i] = setPriceCopyOnWrite(copiedCart[i], price);
+    }
+  }
+  return copiedCart;
+}
+```
+
+`Clojure`, `Haskell` 등 FP 언어는 기본적으로 copy-on-write를 지원하지만,
+
+`JS`에서는 직접 구현해야 하므로 유틸 함수로 만들어 쓰자
