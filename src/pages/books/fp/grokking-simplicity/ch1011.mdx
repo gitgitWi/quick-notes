@@ -1,0 +1,149 @@
+---
+layout: '@features/ui/layouts/post-layout.astro'
+title: '일급 함수'
+description: '[쏙쏙 들어오는 함수형 코딩 Ch10-11]'
+updatedAt: '2023-01-09T13:56:25.251Z'
+tags: 'develop, fp, first_class, higher-order_function'
+---
+
+import { DEFAULT_CUSTOM_COMPONENTS } from '@features/mdx';
+export const components = DEFAULT_CUSTOM_COMPONENTS;
+
+> 코드 냄새와 중복을 없애 추상화를 잘할 수 있는 리팩터링 두 가지
+
+## 암묵적 인자를 드러내기 <code>_express implicit argument_</code>
+
+### 코드의 냄새: 함수 이름에 있는 암묵적 인자
+
+- 함수 구현이 거의 똑같음
+- 함수 이름이 구현의 차이를 만듦
+- ex.
+  ```javascript
+  cart = setPriceByName(cart, 'shoe', 13);
+  cart = setQuantityByName(cart, 'shoe', 13);
+  cart = setShippingByName(cart, 'shoe', 0);
+  cart = setTaxByName(cart, 'shoe', 2.34);
+  ```
+
+### 리팩터링
+
+- 함수 이름에 있는 암묵적 인자를 확인
+- 명시적인 인자를 추가
+  - **일급 값으로 만드는 것이 중요**
+- 함수 본문에 하드 코딩된 값을 새로운 인자로 바꾸기
+- 함수 호출부 고치기
+- ex.
+  ```javascript
+  cart = setFieldByName(cart, 'shoe', 'price', 13);
+  cart = setFieldByName(cart, 'shoe', 'quantity', 13);
+  cart = setFieldByName(cart, 'shoe', 'shipping', 0);
+  cart = setFieldByName(cart, 'shoe', 'tax', 2.34);
+  ```
+
+### 일급인 것과 일급이 아닌 것을 구별하기
+
+- JS에서 일급이 아닌 것: 수식 연산자, 반복문, 조건문, `try`/`catch` 블록
+- 일급으로 할 수 있는 것
+  - 변수에 할당
+  - 함수의 인자로 넘기기
+  - 함수의 리턴값으로 받기
+  - 배열이나 객체에 담기
+- 일급이 아닌 것을 찾아 일급으로 바꾸는 기술이 FP에서 중요
+  - ex. `+` 연산자는 변수에 할당할 수 없지만 `function plus(a, b)`와 같은 함수를 만들 수 있음
+
+### 일급 필드를 사용하면 API를 바꾸기 더 어려워지는 게 아닐까?
+
+코드 전체를 바꾸지 않고, 추상화 벽 위에서 기존 필드명을 그대로 사용하고 싶다면, 내부에서 간단히 바꿔주면 된다
+
+```javascript
+const validItemFields = ['price', 'quantity', 'shipping', 'tax', 'number'];
+const translations = { quantity: 'number' };
+
+function setFieldByName(cart, name, field, value) {
+  // 런타임에도 안전하게 문자열 검사
+  if (!validItemFields.includes(field)) throw 'Not a Valid item field';
+  // 새로운 필드명으로 바꾸기
+  if (translations.hasOwnProperty(field)) field = translations[field];
+  const item = cart[name];
+  const newItem = objectSet(item, field, value);
+  const newCart = objectSet(cart, name, newItem);
+  return newCart;
+}
+```
+
+### 데이터 지향 <code>_data orientaion_</code>
+
+이벤트와 엔티티에 대한 사실을 표현하기 위한 일반 데이터 구조를 사용하는 프로그래밍 형식
+
+- 객체, 배열
+- 일반적인 엔티티는 일반적인 데이터 구조를 사용해야 한다
+- 데이터가 미래에 어떤 방법으로 해석될지 미리 알 수 없기 때문에 필요할 때 알맞은 방법으로 해석할 수 있어야
+
+## 함수 본문을 콜백으로 바꾸기 <code>_replace body with callback_</code>
+
+공통 본문을 고차 함수로 분리
+
+### 리팩터링
+
+- 함수 본문에서 바꿀 부분의 앞부분-뒷부분 확인
+- 리팩터링 할 코드를 함수로 빼내기
+- 빼낸 함수의 인자로 넘길 부분을 또 다른 함수로 빼내기
+
+#### ex.
+
+원래 코드 함수 본문에서 바꿀 부분의 앞부분-뒷부분 확인
+
+```javascript
+// 앞부분
+try {
+  // 본문
+  saveUserData(user);
+  // 뒷부분
+} catch (error) {
+  logToSnapErrors(error);
+}
+
+// 앞부분
+try {
+  // 본문
+  fetchProduct(productId);
+  // 뒷부분
+} catch (error) {
+  logToSnapErrors(error);
+}
+```
+
+리팩터링 할 코드를 함수로 빼내기
+
+```javascript
+function withLogging() {
+  try {
+    // 본문
+    fetchProduct(productId);
+    // 뒷부분
+  } catch (error) {
+    logToSnapErrors(error);
+  }
+}
+
+withLogging();
+```
+
+빼낸 함수의 인자로 넘길 부분을 또 다른 함수로 빼내기
+
+```javascript
+function withLogging(f) {
+  try {
+    f();
+  } catch (error) {
+    logToSnapErrors(error);
+  }
+}
+
+// 인자로 넘길 본문을 익명 함수로 빼내기
+withLogging(() => saveUserData(user));
+```
+
+- 함수에 일반 데이터 값이 아닌 함수를 전달하는 이유
+  - 함수 안에 있는 코드가 특정 문맥 안에서 실행돼야 하기 때문
+  - 고차 함수를 쓰면 다른 곳에 정의된 문맥에서 코드를 실행할 수 있음
