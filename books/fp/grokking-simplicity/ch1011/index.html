@@ -144,6 +144,105 @@
 </ul>
 </li>
 </ul>
+<h2 id="배열-copy-on-write-리팩토링" class="mt-6 mb-4 text-5xl text-indigo-100 font-extrabold whitespace-normal break-words">배열 copy-on-write 리팩토링</h2>
+<p>원래 코드</p>
+<pre class="w-11/12 p-2 pl-4 m-3 mb-6 rounded-xl overflow-x-auto bg-slate-800/50 text-sm _codeSnippet_1fksl_1"><code class="p-1 rounded-md font-mono text-base bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#81A1C1">function</span><span style="color:#D8DEE9FF"> </span><span style="color:#88C0D0">arraySet</span><span style="color:#ECEFF4">(</span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">,</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">idx</span><span style="color:#ECEFF4">,</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">value</span><span style="color:#ECEFF4">)</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">const</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">=</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">.</span><span style="color:#88C0D0">slice</span><span style="color:#D8DEE9FF">()</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">  </span><span style="color:#616E88">// 바뀌는 본문</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#D8DEE9FF">[</span><span style="color:#D8DEE9">idx</span><span style="color:#D8DEE9FF">] </span><span style="color:#81A1C1">=</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">value</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">return</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#81A1C1">function</span><span style="color:#D8DEE9FF"> </span><span style="color:#88C0D0">arrayPush</span><span style="color:#ECEFF4">(</span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">,</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">element</span><span style="color:#ECEFF4">)</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">const</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">=</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">.</span><span style="color:#88C0D0">slice</span><span style="color:#D8DEE9FF">()</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">  </span><span style="color:#616E88">// 바뀌는 본문</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#ECEFF4">.</span><span style="color:#88C0D0">push</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">element</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">return</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#81A1C1">function</span><span style="color:#D8DEE9FF"> </span><span style="color:#88C0D0">arrayDropLast</span><span style="color:#ECEFF4">(</span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">)</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">const</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">=</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">.</span><span style="color:#88C0D0">slice</span><span style="color:#D8DEE9FF">()</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">  </span><span style="color:#616E88">// 바뀌는 본문</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#ECEFF4">.</span><span style="color:#88C0D0">pop</span><span style="color:#D8DEE9FF">()</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">return</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#81A1C1">function</span><span style="color:#D8DEE9FF"> </span><span style="color:#88C0D0">arrayDropFirst</span><span style="color:#ECEFF4">(</span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">)</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">const</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">=</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">.</span><span style="color:#88C0D0">slice</span><span style="color:#D8DEE9FF">()</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">  </span><span style="color:#616E88">// 바뀌는 본문</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#ECEFF4">.</span><span style="color:#88C0D0">shift</span><span style="color:#D8DEE9FF">()</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">return</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span></code></pre>
+<p>함수 빼내기, 콜백 빼내기</p>
+<pre class="w-11/12 p-2 pl-4 m-3 mb-6 rounded-xl overflow-x-auto bg-slate-800/50 text-sm _codeSnippet_1fksl_1"><code class="p-1 rounded-md font-mono text-base bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#81A1C1">function</span><span style="color:#D8DEE9FF"> </span><span style="color:#88C0D0">arraySet</span><span style="color:#ECEFF4">(</span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">,</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">idx</span><span style="color:#ECEFF4">,</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">value</span><span style="color:#ECEFF4">)</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">return</span><span style="color:#D8DEE9FF"> </span><span style="color:#88C0D0">withArrayCopy</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">,</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">(</span><span style="color:#D8DEE9">copiedArray</span><span style="color:#ECEFF4">)</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">=&gt;</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#ECEFF4">    </span><span style="color:#616E88">// 바뀌는 본문을 익명 함수로 빼내기</span></span>
+<span class="line"><span style="color:#D8DEE9FF">    </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#D8DEE9FF">[</span><span style="color:#D8DEE9">idx</span><span style="color:#D8DEE9FF">] </span><span style="color:#81A1C1">=</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">value</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#ECEFF4">}</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#616E88">// 바뀌지 않는 부분을 함수로 빼내기</span></span>
+<span class="line"><span style="color:#81A1C1">function</span><span style="color:#D8DEE9FF"> </span><span style="color:#88C0D0">withArrayCopy</span><span style="color:#ECEFF4">(</span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">,</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">callback</span><span style="color:#ECEFF4">)</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">const</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">=</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">array</span><span style="color:#ECEFF4">.</span><span style="color:#88C0D0">slice</span><span style="color:#D8DEE9FF">()</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#88C0D0">callback</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">copiedArray</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">return</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">copiedArray</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span></code></pre>
+<h2 id="logging-함수-리팩토링" class="mt-6 mb-4 text-5xl text-indigo-100 font-extrabold whitespace-normal break-words">logging 함수 리팩토링</h2>
+<ul class="ml-2 mb-2">
+<li class="ml-2 list-inside list-disc">로그를 남기지 않는 함수를 로그를 남기는 함수로 감싸기</li>
+</ul>
+<p>원래 함수</p>
+<pre class="w-11/12 p-2 pl-4 m-3 mb-6 rounded-xl overflow-x-auto bg-slate-800/50 text-sm _codeSnippet_1fksl_1"><code class="p-1 rounded-md font-mono text-base bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#81A1C1">try</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#88C0D0">saveUserData</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">user</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">catch</span><span style="color:#D8DEE9FF"> (</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">) </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#88C0D0">logToSnapErrors</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#81A1C1">try</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#88C0D0">fetchProduct</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">productId</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">catch</span><span style="color:#D8DEE9FF"> (</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">) </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#88C0D0">logToSnapErrors</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span></code></pre>
+<p>이름을 명확하게 바꿈</p>
+<pre class="w-11/12 p-2 pl-4 m-3 mb-6 rounded-xl overflow-x-auto bg-slate-800/50 text-sm _codeSnippet_1fksl_1"><code class="p-1 rounded-md font-mono text-base bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#81A1C1">try</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#88C0D0">saveUserDataNoLogging</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">user</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">catch</span><span style="color:#D8DEE9FF"> (</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">) </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#88C0D0">logToSnapErrors</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#81A1C1">try</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#88C0D0">fetchProductWithNoLogging</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">productId</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">catch</span><span style="color:#D8DEE9FF"> (</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">) </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#88C0D0">logToSnapErrors</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span></code></pre>
+<p>중복 제거; 익명 함수로 만들고, 인자를 일반적인 이름으로 바꾸기</p>
+<pre class="w-11/12 p-2 pl-4 m-3 mb-6 rounded-xl overflow-x-auto bg-slate-800/50 text-sm _codeSnippet_1fksl_1"><code class="p-1 rounded-md font-mono text-base bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#81A1C1">function</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">(</span><span style="color:#D8DEE9">arg</span><span style="color:#ECEFF4">)</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">try</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">    </span><span style="color:#88C0D0">saveUserDataNoLogging</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">arg</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#ECEFF4">}</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">catch</span><span style="color:#D8DEE9FF"> (</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">) </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">    </span><span style="color:#88C0D0">logToSnapErrors</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#ECEFF4">}</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span></code></pre>
+<p>함수 본문을 콜백으로 바꾸기</p>
+<pre class="w-11/12 p-2 pl-4 m-3 mb-6 rounded-xl overflow-x-auto bg-slate-800/50 text-sm _codeSnippet_1fksl_1"><code class="p-1 rounded-md font-mono text-base bg-indigo-400 text-indigo-800"><span class="line"><span style="color:#81A1C1">function</span><span style="color:#D8DEE9FF"> </span><span style="color:#88C0D0">wrapLogging</span><span style="color:#ECEFF4">(</span><span style="color:#D8DEE9">f</span><span style="color:#ECEFF4">)</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#81A1C1">try</span><span style="color:#D8DEE9FF"> </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">    </span><span style="color:#88C0D0">f</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">arg</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#ECEFF4">}</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">catch</span><span style="color:#D8DEE9FF"> (</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">) </span><span style="color:#ECEFF4">{</span></span>
+<span class="line"><span style="color:#D8DEE9FF">    </span><span style="color:#88C0D0">logToSnapErrors</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">error</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#D8DEE9FF">  </span><span style="color:#ECEFF4">}</span></span>
+<span class="line"><span style="color:#ECEFF4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#81A1C1">const</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">saveUserDataWithLogging</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">=</span><span style="color:#D8DEE9FF"> </span><span style="color:#88C0D0">wrapLogging</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">saveUserDataNoLogging</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span>
+<span class="line"><span style="color:#81A1C1">const</span><span style="color:#D8DEE9FF"> </span><span style="color:#D8DEE9">fetchProductaWithLogging</span><span style="color:#D8DEE9FF"> </span><span style="color:#81A1C1">=</span><span style="color:#D8DEE9FF"> </span><span style="color:#88C0D0">wrapLogging</span><span style="color:#D8DEE9FF">(</span><span style="color:#D8DEE9">fetchProductNoLogging</span><span style="color:#D8DEE9FF">)</span><span style="color:#81A1C1">;</span></span></code></pre>
+<blockquote class="m-2 p-4 px-6 rounded-md font-serif italic text-base font-semibold leading-8 bg-indigo-300/90 text-indigo-900 shadow-md shadow-indigo-800/70">
+<p>함수를 리턴하는 함수는 <strong>함수 팩토리</strong>와 같다</p>
+</blockquote>
+<blockquote class="m-2 p-4 px-6 rounded-md font-serif italic text-base font-semibold leading-8 bg-indigo-300/90 text-indigo-900 shadow-md shadow-indigo-800/70">
+<p>전체 프로그램을 고차 함수로 만들어도 될까?</p>
+<p>가능하겠지만, 더 중요한 질문은 “정말 그것이 필요한가”임</p>
+<p>고차 함수는 강력하지만, 비용이 따름.</p>
+<p>직관적인 방법에 비해, 코드가 더 읽기 쉬운가? 중복 코드를 없앨 수 있는가? 코드가 하는 일이 무엇인지 쉽게 알 수 있는가? 등 질문들을 놓치면 안된다</p>
+</blockquote>
 
         <!-- TODO: seperate component -->
         <div class="pt-4 text-sm text-indigo-200/90 italic font-light cursor-default text-right">
