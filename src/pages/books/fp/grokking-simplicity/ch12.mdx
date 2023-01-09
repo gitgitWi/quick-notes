@@ -1,0 +1,17 @@
+---
+layout: '@features/ui/layouts/post-layout.astro'
+title: '함수형 반복'
+description: '[쏙쏙 들어오는 함수형 코딩 Ch12] map, filter, reduce'
+updatedAt: '2023-01-09T15:39:57.154Z'
+tags: 'develop, fp'
+---
+
+import { DEFAULT_CUSTOM_COMPONENTS } from '@features/mdx';
+export const components = DEFAULT_CUSTOM_COMPONENTS;
+
+### `reduce`
+
+`reduce`의 강력함
+
+- 실행 취소/복귀, 시간 여행 디버깅 등 가능
+- `reduce`로는 `map`, `filter`를 만들 수는 있지만, `map`, `filter`로 `reduce`를 만들 수는 없다
