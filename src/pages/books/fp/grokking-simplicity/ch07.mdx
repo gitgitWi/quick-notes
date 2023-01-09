@@ -1,0 +1,30 @@
+---
+layout: '@features/ui/layouts/post-layout.astro'
+title: '신뢰할 수 없는 코드를 쓰면서 불변성 지키기'
+description: '[쏙쏙 들어오는 함수형 코딩 Ch07] 레거시 코드, 신뢰할 수 없는 코드에서 내 코드를 보호하기 위한 방어적 복사'
+updatedAt: '2023-01-06T11:48:02.344Z'
+tags: 'develop, fp, immutability'
+---
+
+import { DEFAULT_CUSTOM_COMPONENTS } from '@features/mdx';
+export const components = DEFAULT_CUSTOM_COMPONENTS;
+
+## 방어적 복사 <code>_defensive copy_</code>
+
+copy-on-write 원칙을 지키면서 안전하게 함수를 사용하기 위한 원칙
+
+### 안전지대
+
+- 불변성이 지켜지는 코드들, 걱정 없이 쓸 수 있음
+- 안전지대 안으로 들어오는 데이터, 밖으로 나가는 데이터는 잠재적으로 바뀔 수 있다는 문제
+- 무엇이 바뀌는지, 무엇을 복사해야할 지 예상할 수 없기 때문에, copy-on-write 패턴으로는 이 문제를 해결할 수 없음
+
+### 규칙: 안전지대 전-후로 깊은 복사
+
+방어적 복사는 **깊은 복사**로 원본 데이터 불변성 유지
+
+- 데이터가 들어올 때 깊은 복사로 만든 복사본 활용하고, 변경 가능한 원본은 버림
+- 안전지대 데이터가 나갈 때 깊은 복사한 복사본을 내보내서, 원본 데이터 불변성 유지
+- 어디서 어떻게 바뀔지 모르기 때문
+- 외부와 공유하는 데이터 구조가 없기 때문에, 비공유 아키텍처 _shared nothing architecture_ 를 구현하기 좋음
+- 다만 깊은 복사 따른 연산/메모리 비용이 큼
