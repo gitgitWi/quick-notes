@@ -1,0 +1,254 @@
+---
+layout: '@features/ui/layouts/post-layout.astro'
+title: '함수형 도구 체이닝'
+description: '[쏙쏙 들어오는 함수형 코딩 Ch13]'
+updatedAt: '2023-01-12T13:30:13.970Z'
+tags: 'develop, fp, chainning'
+---
+
+import { DEFAULT_CUSTOM_COMPONENTS } from '@features/mdx';
+export const components = DEFAULT_CUSTOM_COMPONENTS;
+
+> 복잡한 반복문을 함수형 도구 체인으로 바꾸는 방법
+
+### ex. 우수 고객들의 가장 비싼 구매 구하기
+
+- 함수 시그니처 정의하는 것으로 시작
+- 우수 고객 `filter`
+- 우수 고객을 가장 비싼 구매로 바꾸는 `map`/`reduce`
+  - 각 고객의 가장 비싼 구매를 찾는 `reduce` => `maxKey` 함수로 분리
+
+항등함수 identity function 활용
+
+- 인자로 받은 값을 그대로 리턴하는 함수
+- 아무 일도 하지 않지만, 아무것도 하지 않아야 할 때 유용
+
+## 체인을 명확하게 만들기
+
+### 1. 단계에 이름 붙이기
+
+원래 코드
+
+```javascript
+function biggestPurchaseBestCustomers(customers) {
+  // 1단계
+  const bestCustomers = filter(
+    customers,
+    (customer) => customer.purchase.length >= 3
+  );
+
+  // 2단계
+  const biggestPurchases = map(bestCustomers, (customer) => {
+    return maxKey(
+      customer.purchases,
+      { total: 0 },
+      (purchase) => purchase.total
+    );
+  });
+
+  return biggestPurchases;
+}
+```
+
+각 단계의 고차 함수를 빼내 이름 붙이기
+
+```javascript
+function biggestPurchasesBestCustomers(customers) {
+  const bestCustomers = selectBestCustomers(customers);
+  const biggestPurchases = getBiggestPurchases(bestCustomers);
+  return biggestPurchases;
+}
+
+function selectBestCustomers(customers) {
+  return filter(customers, (customer) => customer.purchase.length >= 3);
+}
+
+function getBiggestPurchases(bestCustomers) {
+  return map(customers, getBiggestPurchase);
+}
+
+function getBiggestPurchase(customer) {
+  return maxKey(customer.purchases, { total: 0 }, (purchase) => purchase.total);
+}
+```
+
+### 2. 콜백에 이름 붙이기
+
+단계에 이름 붙이는 대신 콜백에 이름 붙이기
+
+```javascript
+function biggestPurchasesBestCustomers(customers) {
+  const bestCustomers = filter(customers, isGoodCustomer);
+  const biggestPurchases = map(bestCustomers, getBiggestPurchase);
+  return biggestPurchases;
+}
+
+function isGoodCustomer(customer) {
+  return customer.purchase.length >= 3;
+}
+
+function getBiggestPurchase(customer) {
+  return maxKey(customer.purchases, { total: 0 }, getPurchaseTotal);
+}
+
+function getPurchaseTotal(purchase) {
+  return purchase.total;
+}
+```
+
+- `selectBestCustomers`는 고객 배열로만 쓸 수 있지만, `isGoodCustomer`는 고객 하나를 넘겨 쓸 수 있으므로, 재사용하기 더 좋은 함수
+
+> 1, 2번 방법은 사용하는 언어의 문법과 문맥에 따라 달라질 수 있음
+>
+> 일반적으로 두번째 방법이 더 명확하지만, 두 가지 방법 모두 시도해서 어떤 방법이 더 좋은지 코드를 비교해 결정
+
+### 스트림 결합 stream fusion
+
+- `map`, `filter`, `reduce` 체인을 최적화하는 것
+- 두 번 연속으로 사용된 `map`/`filter를` 한번만 사용하는 등
+- 가비지 컬렉션을 적게 할 수 있음
+- 병목이 생겼을 때만 사용하는 것이 좋고, 대부분의 경우에는 여러 단계를 사용하는 것이 더 명확하고 읽기 쉬움
+
+## 기존에 있던 반복문을 함수형 도구로 리팩터링하기
+
+기존 코드가 잘 이해되지 않을 때, 반복문을 하나씩 선택하고 함수형 도구 체인으로 바꾸는 것
+
+ex.
+
+```javascript
+const answer = [];
+const window = 5;
+
+for (let i = 0; i < array.length; i++) {
+  let sum = 0;
+  let count = 0;
+  for (let w = 0; w < window; w++) {
+    let idx = i + w;
+    if (idx < array.length) {
+      sum += array[idx];
+      count += 1;
+    }
+  }
+
+  answer.push(sum / count);
+}
+```
+
+### 데이터 만들기
+
+```javascript
+const answer = [];
+const window = 5;
+
+for (let i = 0; i < array.length; i++) {
+  let sum = 0;
+  let count = 0;
+
+  // 기존 w, idx => 새로운 데이터 subarray를 선언해 활용
+  const subarray = array.slice(i, i + window);
+  for (let w = 0; w < subarray.length; w++) {
+    sum += subarray[w];
+    count += 1;
+  }
+
+  answer.push(sum / count);
+}
+```
+
+### 배열 전체를 다루기
+
+위에서 하위 배열 subarray를 만들었기 때문에, 배열 전체를 반복할 수 있게 됨
+
+```javascript
+const answer = [];
+const window = 5;
+
+for (let i = 0; i < array.length; i++) {
+  const subarray = array.slice(i, i + window);
+  // 특정 배열의 평균을 구하는 average 함수를 선언해 활용
+  answer.push(average(subarray));
+}
+```
+
+### 작은 단계로 나누기
+
+예제 코드는 배열 element가 아닌 index로 반복하는 문제이므로
+
+- index가 들어있는 배열을 만들기
+- index 배열 전체에 함수형 도구 사용
+
+작은 단계들로 나눠 명확하게 만들기
+
+```javascript
+// index 배열 생성하는 작은 단계 추가
+// const indices = Array.from(Array(array.length).keys())
+
+// index 배열 생성하는 range 유틸 함수 생성
+const indices = range(0, array.length);
+
+const window = 5;
+// 하위 배열 만드는 작은 단계로 분리
+const windows = map(indices, (i) => array.slice(i, i + window));
+
+// 평균 계산하는 작은 단계로 분리
+const answer = map(windows, average);
+```
+
+### 그 외
+
+- 조건문을 `filter()`로 만들기
+- 유용한 유틸 함수 추출하기
+- 개선을 위해 실험하기; 다양한 방식으로 함수형 도구 조합
+
+## 체이닝 디버깅을 위한 팁
+
+### 구체적인 것을 유지하기
+
+- 파이프라인 단계가 많으면 원래 데이터 구조를 망각하기 쉬워짐
+- 의미를 기억하기 쉽게 이름을 잘 지어야 한다
+
+### 출력해보기
+
+### 타입을 따라가 보기
+
+## 다양한 함수형 도구
+
+- `pluck`: 특정 필드/속성 값 가져오기
+  ```javascript
+  function pluck(array, field) {
+    return map(array, (object) => object[field]);
+  }
+  ```
+- `concat`: 중첩된 배열을 한 단계의 배열로 만들기 (JS 배열 `concat`과는 다르고 `flat`과 유사)
+  ```javascript
+  function concat(arrays) {
+    const ret = [];
+    forEach(arrays, (array) => {
+      forEach(array, (element) => ret.push(element));
+    });
+    return ret;
+  }
+  ```
+- `frequencisesBy`, `groupBy`: 개수 세기 또는 그룹화
+
+  ```javascript
+  function frequencisesBy(array, f) {
+    const ret = {};
+    forEach(array, (element) => {
+      const key = f(element);
+      ret[key] ? (ret[key] += 1) : (ret[key] = 1);
+    });
+    return ret;
+  }
+
+  function groupBy(array, f) {
+    const ret = {};
+    forEach(array, (element) => {
+      const key = f(element);
+      ret[key] ? ret[key].push(element) : (ret[key] = [element]);
+    });
+    return ret;
+  }
+  ```
+
+_JS에서 `map`/`filter`/`reduce`는 배열 내장 메서드이므로, 지금까지 만들었던 유틸함수보다는 좀더 쉽게 사용 가능, 메서드 체이닝 가능_
